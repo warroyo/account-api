@@ -8,7 +8,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Steeltoe.Extensions.Logging;
-using Steeltoe.Management.CloudFoundry;
+using Steeltoe.Extensions.Configuration.CloudFoundry;
+
 
 namespace account_api
 {
@@ -20,6 +21,7 @@ namespace account_api
 
             var host = new WebHostBuilder()
                 .UseKestrel()
+                .UseCloudFoundryHosting()
                 .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseIISIntegration()
                 .UseStartup<Startup>()
@@ -29,6 +31,7 @@ namespace account_api
                     configBuilder.SetBasePath(env.ContentRootPath)
                         .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
                         .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
+                        .AddCloudFoundry()
                         .AddEnvironmentVariables();
                     config = configBuilder.Build();
                 })
