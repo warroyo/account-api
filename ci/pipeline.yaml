@@ -1,0 +1,89 @@
+---
+jobs:
+- name: deploy-((app_name))-dev
+  plan:
+  - get: application
+    trigger: true
+  - put: cf-foundation
+    params:
+      command: zero-downtime-push
+      manifest: application/manifest.dev.yml
+      org: janus-workshop
+      space: dev
+      path: application/
+      current_app_name: ((app_name))
+
+- name: dev-smoke-tests
+  plan:
+    - get: application
+    - get: cf-foundation
+      trigger: true
+      passed: [deploy-((app_name))-dev]
+    - task: run-smoke-tests
+      file: application/ci/tasks/smoke/task.yml
+      params:
+        app_url: ((dev_route))
+
+- name: deploy-((app_name))-test
+  plan:
+  - get: application
+  - get: cf-foundation
+    trigger: true
+    passed: [dev-smoke-tests]
+  - put: cf-foundation
+    params:
+      command: zero-downtime-push
+      manifest: application/manifest.test.yml
+      org: janus-workshop
+      space: test
+      path: application/
+      current_app_name: ((app_name))
+
+- name: test-smoke-tests
+  plan:
+    - get: application
+    - get: cf-foundation
+      trigger: true
+      passed: [deploy-((app_name))-test]
+    - task: run-smoke-tests
+      file: application/ci/tasks/smoke/task.yml
+      params:
+        app_url: ((test_route))
+
+- name: test-scale
+  plan:
+    - get: cf-foundation
+      trigger: true
+      passed: [test-smoke-tests]
+    - put: cf-scale
+      resource: cf-foundation
+      params:
+        command: scale
+        org: janus-workshop
+        space: test
+        app_name: ((app_name))
+        instances: 5
+
+resources:
+- name: application
+  type: git
+  source:
+    uri: ((git_repo))
+    branch: pipeline
+
+
+- name: cf-foundation
+  type: cf-cli-resource
+  source:
+    api: https://api.sys.pas.warroyo.com
+    username: admin
+    password: ((pas_gcp_warroyo))
+    skip_cert_check: true
+
+resource_types:
+- name: cf-cli-resource
+  type: docker-image
+  source:
+    repository: nulldriver/cf-cli-resource
+    tag: latest
+
