@@ -1,6 +1,6 @@
 app_name: account-api
 git_repo:  https://github.com/warroyo/account-api
-dev_route: https://account-api.dev.apps.pas.warroyo.com
-test_route: https://account-api.test.apps.pas.warroyo.com
+dev_route: https://account-api.dev.apps.pas.warroyo.com/api/accounts
+test_route: https://account-api.test.apps.pas.warroyo.com/api/accounts
 
 
