@@ -9,7 +9,7 @@ jobs:
       command: zero-downtime-push
       manifest: application/manifest.dev.yml
       org: janus-workshop
-      space: dev
+      space: development
       path: application/
       current_app_name: ((app_name))
 
