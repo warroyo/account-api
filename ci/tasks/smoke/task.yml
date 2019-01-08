@@ -6,7 +6,7 @@ image_resource:
     repository: appropriate/curl
 
 inputs:
-  - name: tools
+  - name: application
 
 run:
-  path: ./tools/tasks/smoke/task.sh
+  path: ./application/ci/tasks/smoke/task.sh
