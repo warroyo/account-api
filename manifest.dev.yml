@@ -1,0 +1,10 @@
+---
+applications:
+- name: account-api
+  routes:
+    - route: account-api.dev.apps.pas.warroyo.com
+  memory: 768M
+  instances: 2
+  services: []
+  env:
+    SKIP_SSL_VALIDATION: "true"
