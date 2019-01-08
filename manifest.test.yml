@@ -3,7 +3,7 @@ applications:
 - name: account-api
   routes:
     - route: account-api.test.apps.pas.warroyo.com
-  memory: 768M
+  memory: 256M
   instances: 2
   services: []
   env:
