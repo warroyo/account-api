@@ -1,0 +1,8 @@
+---
+applications:
+- name: ((name))
+  routes:
+    - route: ((name)).((domain))
+  memory: 256M
+  instances: ((instances))
+  services: []
