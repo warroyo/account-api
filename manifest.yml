@@ -3,6 +3,6 @@ applications:
 - name: ((name))
   routes:
     - route: ((name)).((domain))
-  memory: 256M
+  memory: 254M
   instances: ((instances))
   services: []
