@@ -7,4 +7,3 @@ applications:
   services: 
   - account-api-db
   instances: ((instances))
-  services: []
