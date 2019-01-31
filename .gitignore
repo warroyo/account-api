@@ -275,4 +275,6 @@ __pycache__/
 #sqlite
 Accounts.db
 
+#inspec
+inspec.lock
 # End of https://www.gitignore.io/api/aspnetcore
