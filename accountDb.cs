@@ -4,11 +4,11 @@ namespace account_api
 {
     public class AccountDb : DbContext
     {
+        public AccountDb(DbContextOptions options)
+            : base(options)
+        {}
         public DbSet<Account> Accounts { get; set; }  
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlite("Filename=./Accounts.db");
-        }
+   
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

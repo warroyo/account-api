@@ -14,7 +14,9 @@
     <PackageReference Include="Steeltoe.CloudFoundry.ConnectorCore" Version="2.1.0" />
     <PackageReference Include="Steeltoe.Management.CloudFoundryCore" Version="2.1.0" />
     <PackageReference Include="Steeltoe.Management.ExporterCore" Version="2.1.0" />
+    <PackageReference Include="Steeltoe.CloudFoundry.Connector.EFCore" Version="2.1.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.2.0" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.1.0" />
     <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.3" />
 
   </ItemGroup>

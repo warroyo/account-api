@@ -4,5 +4,7 @@ applications:
   routes:
     - route: ((name)).((domain))
   memory: 254M
+  services: 
+  - account-api-db
   instances: ((instances))
   services: []

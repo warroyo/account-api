@@ -17,20 +17,20 @@ namespace account_api.Controllers
     public class AccountsController : ControllerBase
     {
         private IConfiguration configuration;
-        public AccountsController(IConfiguration iConfig)  
+        public AccountsController(AccountDb dbContext,IConfiguration iConfig)  
         {  
+        DbContext = dbContext;
         configuration = iConfig;  
         }   
+
+         public AccountDb DbContext { get; }
         // GET api/accounts
         [HttpGet]
         public IEnumerable<Account> Get()
         {
             string order_service = configuration.GetValue<string>("endpoints:order-service");  
-
-            using (AccountDb db = new AccountDb())
-            {
-                return db.Accounts.ToList();
-            }
+            
+            return DbContext.Accounts.ToList();
         }
   
 
@@ -38,10 +38,7 @@ namespace account_api.Controllers
         [HttpGet("{id}")]
         public Account Get(int id)
         {
-            using (AccountDb db = new AccountDb())
-            {
-                return db.Accounts.First(t => t.Id == id);
-            }
+            return DbContext.Accounts.First(t => t.Id == id);
         }
 
         // POST api/accounts
@@ -49,11 +46,9 @@ namespace account_api.Controllers
         public void Post([FromBody]JObject value)
         {
             Account posted = value.ToObject<Account>();
-            using (AccountDb db = new AccountDb())
-            {
-                db.Accounts.Add(posted);
-                db.SaveChanges();
-            }
+           
+            DbContext.Accounts.Add(posted);
+            DbContext.SaveChanges();
         }
 
         // PUT api/accounts/5
@@ -62,22 +57,17 @@ namespace account_api.Controllers
         {
             Account posted = value.ToObject<Account>();
             posted.Id = id; // Ensure an id is attached
-            using (AccountDb db = new AccountDb())
-            {
-                db.Accounts.Update(posted);
-                db.SaveChanges();
-            }
+           
+                DbContext.Accounts.Update(posted);
+                DbContext.SaveChanges();
         }
         // DELETE api/accounts/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
-            using (AccountDb db = new AccountDb())
-            {
-                if (db.Accounts.Where(t => t.Id == id).Count() > 0) // Check if element exists
-                    db.Accounts.Remove(db.Accounts.First(t => t.Id == id));
-                db.SaveChanges();
-            }
+            if (DbContext.Accounts.Where(t => t.Id == id).Count() > 0) // Check if element exists
+                DbContext.Accounts.Remove(DbContext.Accounts.First(t => t.Id == id));
+            DbContext.SaveChanges();
         }
     }
 }
