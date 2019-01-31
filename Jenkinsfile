@@ -1,20 +1,20 @@
 dotnetDelivery {
     appName = 'account-api'
     dev = [
-        apiUrl: 'https://api.run.pivotal.io',
-        org: 'warroyo-sandbox',
+        apiUrl: 'https://api.sys.pas.warroyo.com',
+        org: 'cd',
         space: 'development',
-        credsKey: 'pws-creds',
+        credsKey: 'pas-warroyo-creds',
         envFile: 'dev.yml',
-        domain: 'dev.warroyo.cfapps.io'
+        domain: 'dev.apps.pas.warroyo.com'
     ]
     qa = [
-        apiUrl: 'https://api.run.pivotal.io',
-        org: 'warroyo-sandbox',
+        apiUrl: 'https://api.sys.pas.warroyo.com',
+        org: 'cd',
         space: 'qa',
-        credsKey: 'pws-creds',
+        credsKey: 'pas-warroyo-creds',
         envFile: 'qa.yml',
-        domain: 'qa.warroyo.cfapps.io',
+        domain: 'qa.apps.pas.warroyo.com',
     ]
     prod = [
         apiUrl: 'https://api.run.pivotal.io',
