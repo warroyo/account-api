@@ -13,6 +13,8 @@ using Microsoft.Extensions.Options;
 using Steeltoe.Management.CloudFoundry;
 using Steeltoe.Management.Endpoint.Env;
 using Microsoft.EntityFrameworkCore;
+using Steeltoe.CloudFoundry.Connector.MySql;
+using Steeltoe.CloudFoundry.Connector.MySql.EFCore;
 
 namespace account_api
 {
@@ -31,8 +33,12 @@ namespace account_api
             services.AddEnvActuator(Configuration);
             services.AddCloudFoundryActuators(Configuration);
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            services.AddDbContext<AccountDb>();
-
+            if (Configuration.GetValue<bool>("mysql")) {
+                services.AddDbContext<AccountDb>(options => options.UseMySql(Configuration));
+            }
+            else{
+                services.AddDbContext<AccountDb>(options => options.UseSqlite("Filename=./Accounts.db"));
+            }
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
